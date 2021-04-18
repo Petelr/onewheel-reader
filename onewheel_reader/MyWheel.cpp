@@ -94,12 +94,13 @@ bool MyWheel::unlock()
 
   if(key_BLEchar.writeValue(OW_KEY,20)) 
   {
-    Serial.println("Write key success.");
+    // Serial.println("Write key success.");
   }
   else
   {
-    Serial.println("Write key failed. ");
+    // Serial.println("Write key failed. ");
   }
 
   speed_rpm_BLEchar.writeValue((byte)0x0101);
 }
+

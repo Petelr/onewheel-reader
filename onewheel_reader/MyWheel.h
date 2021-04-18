@@ -9,6 +9,10 @@
 #define UUID_SPEED_RPM "e659f30b-ea98-11e3-ac10-0800200c9a66"
 #define UUID_LIFE_ODOMETER "e659f319-ea98-11e3-ac10-0800200c9a66"
 #define UUID_ONEWHEEL_SERVICE "e659f300-ea98-11e3-ac10-0800200c9a66"
+#define UUID_BATTERY_REMAINING "e659f303-ea98-11e3-ac10-0800200c9a66"
+#define UUID_CURRENT_AMPS "e659f312-ea98-11e3-ac10-0800200c9a66"
+#define UUID_SAFETY_HEADROOM "e659f317-ea98-11e3-ac10-0800200c9a66"
+#define UUID_TEMPERATURE "e659f310-ea98-11e3-ac10-0800200c9a66"
 
 
 
@@ -24,6 +28,11 @@ class MyWheel
     BLEDevice *theWheel;
     BLEService *owService;
 
+
   private:
     byte OW_KEY[20];
+    // uint8_t _lifeOdometer;
+    // uint8_t _batteryRemaining;
+    // float _currentAmps;
+    // float _temperature;
 };
