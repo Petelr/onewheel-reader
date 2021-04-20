@@ -10,7 +10,16 @@
 #include <ArduinoBLE.h>
 #include "MyWheel.h"
 #include "useful_funcs.h"
+#include "LowPower.h"
 
+void _onConnect(BLEDevice c){
+  Serial.println("On Connect Event Handler. ");
+}
+
+void _onDisConnect(BLEDevice c){
+  Serial.println("On DisConnect Event Handler. Sleep Mode");
+  // LowPower.deepSleep()
+}
 
 void setup() {
   // put your setup code here, to run once:
@@ -23,6 +32,8 @@ void setup() {
 
     while(1);
   }
+  BLE.setEventHandler(BLEConnected, _onConnect);
+  BLE.setEventHandler(BLEDisconnected, _onDisConnect);
   BLE.scan();
   Serial.println("Start scanning.....");
 
@@ -35,7 +46,6 @@ void loop() {
     BLE.stopScan();
     MyWheel weee( & bleDevice);
     weee.connect();
-    Serial.println("I'm done connecting!");
     weee.read_HW_ver();
     Serial.println("I'm done read SN");
     
@@ -59,15 +69,15 @@ void loop() {
     Serial.print("Lock status: ");
     Serial.println(weee.locked());
 
-    BLECharacteristic lifeOdometer = weee.theWheel->characteristic(UUID_LIFE_ODOMETER);
-    lifeOdometer.read();
-    Serial.print("life odometer: ");
-    print_16bit_Hex(lifeOdometer.value());
+    // BLECharacteristic lifeOdometer = weee.theWheel->characteristic(UUID_LIFE_ODOMETER);
+    // lifeOdometer.read();
+    // Serial.print("life odometer: ");
+    // print_16bit_Hex(lifeOdometer.value());
 
-    BLECharacteristic batteryRemaining = weee.theWheel->characteristic(UUID_BATTERY_REMAINING);
-    batteryRemaining.read();
-    Serial.print("Battery Remaining: ");
-    print_16bit_Hex(batteryRemaining.value());
+    // BLECharacteristic batteryRemaining = weee.theWheel->characteristic(UUID_BATTERY_REMAINING);
+    // batteryRemaining.read();
+    // Serial.print("Battery Remaining: ");
+    // print_16bit_Hex(batteryRemaining.value());
 
     // Current amps is an int16, divided by 512 to get the float value
     BLECharacteristic currentAmps = weee.theWheel->characteristic(UUID_CURRENT_AMPS);
@@ -80,20 +90,26 @@ void loop() {
     memcpy(&amps, &tempArray, sizeof(amps));
     Serial.println(amps*1.0/512.0); 
 
-    BLECharacteristic temperature = weee.theWheel->characteristic(UUID_TEMPERATURE);
+    // BLECharacteristic temperature = weee.theWheel->characteristic(UUID_TEMPERATURE);
 
     Serial.println(currentAmps.subscribe());
-    Serial.println(batteryRemaining.subscribe());
-    Serial.println(temperature.subscribe());
+    // Serial.println(batteryRemaining.subscribe());
+    // Serial.println(temperature.subscribe());
 
     uint16_t batt;
     float a;
     float b;
     int_least16_t temperature_;
+    uint8_t controlFlag = 1;
     while(1)
     {
       // if (temperature.valueUpdated() || batteryRemaining.valueUpdated() || currentAmps.valueUpdated())
-      if (currentAmps.valueUpdated())
+      if (Serial.available())
+      {
+        controlFlag = Serial.parseInt();
+        Serial.println(Serial.read());
+      }
+      if (currentAmps.valueUpdated() && controlFlag)
       {
         while (weee.locked()){
           weee.unlock();

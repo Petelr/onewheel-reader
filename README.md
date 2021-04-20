@@ -13,12 +13,12 @@ Here is a list of software used in this project:
 ## List of features
 - [ ] Connections
   - [x] Unlock OneWheel
-  - [ ] Keep connection alive
+  - [x] Keep connection alive
 - [ ] Data acquisition  
   - [x] Lifetime Odometer
-  - [ ] CurrentAmps
+  - [x] CurrentAmps
   - [ ] Current Speed
-  - [ ] Remaining Battery
+  - [x] Remaining Battery
   - [ ] Trip Total Amp Hours
 - [ ] Data Visialization 
   - [ ] LCD screen display
