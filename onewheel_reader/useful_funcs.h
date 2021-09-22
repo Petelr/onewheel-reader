@@ -1,4 +1,6 @@
 #include "Arduino.h"
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 void printData(const unsigned char data[], int length);
 
