@@ -11,17 +11,18 @@ Here is a list of software used in this project:
 - Arduino IDE
 
 ## List of features
-- [ ] Connections
+- [x] Connections
   - [x] Unlock OneWheel
   - [x] Keep connection alive
 - [ ] Data acquisition  
   - [x] Lifetime Odometer
   - [x] CurrentAmps
-  - [ ] Current Speed
+  - [x] Current Speed
   - [x] Remaining Battery
   - [ ] Trip Total Amp Hours
-- [ ] Data Visialization 
-  - [ ] LCD screen display
+- [x] Data Visialization 
+  - [x] LCD screen display
 
+Most of the features work now!
 
 
